@@ -1,1 +1,8 @@
-module.exports = require('./packages/config/eslint-preset.js')
+module.exports = {
+  extends: ['custom'],
+  parserOptions: {
+    project: ['./packages/*/tsconfig.json'],
+    tsconfigRootDir: __dirname,
+  },
+  root: true,
+}

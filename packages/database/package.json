@@ -28,7 +28,7 @@
         "@types/node": "^18.15.12"
     },
     "devDependencies": {
-        "config": "workspace:*",
+        "eslint-config-custom": "workspace:*",
         "eslint": "^8.38.0",
         "prisma": "^4.13.0",
         "rimraf": "^5.0.0",
