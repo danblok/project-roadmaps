@@ -4,8 +4,8 @@ export default withAuth({
   callbacks: {
     authorized({ req, token }) {
       return !!token
-    }
-  }
+    },
+  },
 })
 
-export const config = { matcher: ['/projects/:path*', '/profile/:path*', '/teams/:path*'] }
+export const config = { matcher: ['/projects/:path*', '/profile'] }  
