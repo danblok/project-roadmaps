@@ -1,4 +1,4 @@
-import Layout from '@/components/layout'
+import Layout from './layout'
 import clsx from 'clsx'
 
 export default function Home() {
