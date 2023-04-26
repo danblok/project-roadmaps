@@ -1,36 +1,179 @@
-import { prisma } from '.'
+import { Prisma, prisma } from '.'
 
-import type { User } from '@prisma/client'
-
-const DEFAULT_USERS = [
-  // Add your own user to pre-populate the database with
-  {
-    name: 'Tim Apple',
-    email: 'tim@apple.com',
-  },
-] as Array<Partial<User>>
-
-;(async () => {
+async function main() {
   try {
-    await Promise.all(
-      DEFAULT_USERS.map((user) =>
-        prisma.user.upsert({
-          where: {
-            email: user.email!,
+    await prisma.$transaction(async () => {
+      /* 
+      // uncomment if you don't have these in your local db
+      await prisma.status.createMany({
+        data: [
+          {
+            name: 'Ready',
           },
-          update: {
-            ...user,
+          {
+            name: 'In Progress'
           },
-          create: {
-            ...user,
+          {
+            name: 'Complete'
           },
-        })
-      )
-    )
+        ]
+      }) */
+      const statuses = await prisma.status.findMany()
+      const readyStatus = statuses.find(status => status.name === 'Ready')
+      const user = await prisma.user.create({
+        data: {
+          email: "test@gmail.com",
+          name: "Dotty",
+        }
+      })
+      const projects: Prisma.ProjectCreateInput[] = [
+        {
+          name: 'Internal Project',
+          owner: {
+            connect: {
+              id: user.id
+            }
+          },
+          tasks: {
+            createMany: {
+              data: [
+                {
+                  name: 'IP1 Task 1',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP1 Task 2',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP1 Task 3',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP1 Task 4',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP1 Task 5',
+                  statusId: readyStatus!.id
+                },
+              ]
+            }
+          }
+        },
+        {
+          name: 'Internal Project 2',
+          owner: {
+            connect: {
+              id: user.id
+            }
+          },
+          tasks: {
+            createMany: {
+              data: [
+                {
+                  name: 'IP2 Task 1',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP2 Task 2',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP2 Task 3',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP2 Task 4',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP2 Task 5',
+                  statusId: readyStatus!.id
+                },
+              ]
+            }
+          }
+        },
+        {
+          name: 'Internal Project 3',
+          owner: {
+            connect: {
+              id: user.id
+            }
+          },
+          tasks: {
+            createMany: {
+              data: [
+                {
+                  name: 'IP3 Task 1',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP3 Task 2',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP3 Task 3',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP3 Task 4',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP3 Task 5',
+                  statusId: readyStatus!.id
+                },
+              ]
+            }
+          }
+        },
+        {
+          name: 'Internal Project 4',
+          owner: {
+            connect: {
+              id: user.id
+            }
+          },
+          tasks: {
+            createMany: {
+              data: [
+                {
+                  name: 'IP4 Task 1',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP4 Task 2',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP4 Task 3',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP4 Task 4',
+                  statusId: readyStatus!.id
+                },
+                {
+                  name: 'IP4 Task 5',
+                  statusId: readyStatus!.id
+                },
+              ]
+            }
+          }
+        },
+      ]
+      await Promise.all(projects.map(project => prisma.project.create({
+        data: project
+      })))
+    })
   } catch (error) {
     console.error(error)
     process.exit(1)
   } finally {
     await prisma.$disconnect()
   }
-})()
+}
+
+void main()
