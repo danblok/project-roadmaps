@@ -8,9 +8,7 @@ export default function Layout({
   return (
     <div className="h-screen grid grid-rows-main-layout">
       <Header />
-      <main className="flex-auto flex-shrink-0 h-96">
-        {children}
-      </main>
+      <main className="bg-slate-100">{children}</main>
       <Footer />
     </div>
   )
