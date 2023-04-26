@@ -3,7 +3,7 @@ import { withAuth } from 'next-auth/middleware'
 export default withAuth({
   callbacks: {
     authorized({ req, token }) {
-      return !!token
+      return !!token && !!token.email && !!token.name
     },
   },
 })
