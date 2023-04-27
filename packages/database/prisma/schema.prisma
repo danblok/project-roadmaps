@@ -22,7 +22,8 @@ model User {
 
 model Project {
   id           String   @id @default(uuid())
-  name         String
+  name         String   @db.VarChar(50)
+  description  String   @db.Text @default("")
   owner        User     @relation(fields: [ownerId], references: [id])
   ownerId      String
   contributors User[]   @relation(name: "contributed_projects")
