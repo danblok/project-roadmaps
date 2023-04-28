@@ -1,11 +1,10 @@
-/**
- * @type {import('next').NextConfig}
- */
-
 const {
   PrismaPlugin,
 } = require('@prisma/nextjs-monorepo-workaround-plugin')
 
+/**
+ * @type {import('next').NextConfig}
+ */
 module.exports = {
   reactStrictMode: true,
   webpack: (config, { isServer }) => {
@@ -15,7 +14,6 @@ module.exports = {
         new PrismaPlugin(),
       ]
     }
-
     return config
   },
   images: {
@@ -25,6 +23,12 @@ module.exports = {
         hostname: 'avatars.githubusercontent.com',
         port: '',
         pathname: '/u/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/a/**',
       },
     ],
   },
