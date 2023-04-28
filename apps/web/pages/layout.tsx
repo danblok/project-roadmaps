@@ -8,7 +8,11 @@ export default function Layout({
   return (
     <div className="h-screen grid grid-rows-main-layout">
       <Header />
-      <main className="bg-slate-100">{children}</main>
+      <main className="bg-cornflower-blue bg-opacity-20">
+        <div className="max-w-7xl w-7xl mx-auto">
+          {children}
+        </div>
+      </main>
       <Footer />
     </div>
   )
