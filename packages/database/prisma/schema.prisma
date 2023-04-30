@@ -7,10 +7,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model User {
+model Account {
   id            String    @id @default(uuid())
   email         String    @unique
-  name          String
+  name          String    @default("")
+  avatar        String    @default("")
   ownedProjects Project[]
   projects      Project[] @relation(name: "contributed_projects")
 
@@ -21,12 +22,12 @@ model User {
 }
 
 model Project {
-  id           String   @id @default(uuid())
-  name         String   @db.VarChar(50)
-  description  String   @db.Text @default("")
-  owner        User     @relation(fields: [ownerId], references: [id])
+  id           String    @id @default(uuid())
+  name         String    @db.VarChar(50)
+  description  String    @default("") @db.Text
+  owner        Account   @relation(fields: [ownerId], references: [id])
   ownerId      String
-  contributors User[]   @relation(name: "contributed_projects")
+  contributors Account[] @relation(name: "contributed_projects")
   tasks        Task[]
   statuses     Status[]
 
@@ -37,6 +38,7 @@ model Project {
 model Task {
   id        String   @id @default(uuid())
   name      String   @db.VarChar(100)
+  Comments  String   @default("")
   status    Status   @relation(fields: [statusId], references: [id])
   statusId  String
   from      DateTime @default(now())

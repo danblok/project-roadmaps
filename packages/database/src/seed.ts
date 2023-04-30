@@ -3,7 +3,7 @@ import { Prisma, prisma } from '.'
 async function main() {
   try {
     await prisma.$transaction(async () => {
-      /* 
+
       // uncomment if you don't have these in your local db
       await prisma.status.createMany({
         data: [
@@ -17,10 +17,10 @@ async function main() {
             name: 'Complete'
           },
         ]
-      }) */
+      })
       const statuses = await prisma.status.findMany()
       const readyStatus = statuses.find(status => status.name === 'Ready')
-      const user = await prisma.user.create({
+      const user = await prisma.account.create({
         data: {
           email: "test@gmail.com",
           name: "Dotty",
