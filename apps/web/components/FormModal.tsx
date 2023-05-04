@@ -1,14 +1,16 @@
 import { Fragment, PropsWithChildren } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import FormModalLoader from './FormModalLoader'
+import Loader from './Loader'
 
 type FormModalProps = {
+  title: string
   isOpen: boolean
   onClose: () => void
   isDataLoading: boolean
 }
 
 export default function FormModal({
+  title,
   isOpen,
   children,
   onClose,
@@ -45,12 +47,12 @@ export default function FormModal({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-8 text-left align-middle shadow-xl transition-all">
-                {isDataLoading && <FormModalLoader />}
+                {isDataLoading && <Loader />}
                 <Dialog.Title
                   as="h3"
                   className="text-xl font-bold leading-6 text-cornflower-blue"
                 >
-                  Create Project
+                  {title}
                 </Dialog.Title>
                 {children}
               </Dialog.Panel>
