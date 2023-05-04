@@ -1,53 +1,68 @@
+import Loader from '@/components/Loader'
+import {
+  QueryClient,
+  dehydrate,
+  useQuery,
+} from '@tanstack/react-query'
+import clsx from 'clsx'
+import { prisma } from 'database'
 import { GetServerSideProps } from 'next'
 import { JWT, getToken } from 'next-auth/jwt'
-import { Project, User, prisma } from 'database'
 import Head from 'next/head'
-import clsx from 'clsx'
 import { PlusCircleIcon } from '@heroicons/react/20/solid'
 import { useState } from 'react'
-import CreateProjectDialog from '@/components/project/CreateProjectModal'
-import ProjectItem from '@/components/project/ProjectItem'
+import { getProjects } from '@/api/project'
+import {
+  CreateProjectDialog,
+  ProjectItem,
+} from '@/components/projects'
 
 type ProjectsProps = {
-  data: (Project & {
-    contributors: User[]
-  })[]
-  userId: string
+  accountId: string
 }
 
 export default function Projects({
-  data: projects,
-  userId,
+  accountId,
 }: ProjectsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
-
+  const { data: projects, isLoading } = useQuery({
+    queryKey: ['projects'],
+    queryFn: async () => await getProjects(accountId),
+  })
   return (
     <>
       <Head>
         <title>My projects</title>
       </Head>
-      <div
-        className={clsx(
-          'mt-12 mb-12 mx-12 grid grid-flow-row gap-y-8',
-          'sm:gap-x-6 sm:grid-cols-2 sm:mx-8',
-          'lg:mt-18 lg:mb-18 lg:grid-cols-3',
-          'xl:mt-24 xl:mb-24 xl:gap-y-12 xl:grid-cols-4'
-        )}
-      >
+      {isLoading ? (
+        <Loader />
+      ) : (
         <div
-          className="flex justify-center items-center bg-slate-50 rounded-xl p-4 shadow-lg lg:p-6 xl:p-8 hover:bg-white hover:shadow-2xl transition-all cursor-pointer"
-          onClick={() => setIsModalOpen(true)}
+          className={clsx(
+            'mx-12 grid grid-flow-row gap-y-8',
+            'sm:gap-x-6 sm:grid-cols-2 sm:mx-8',
+            ' lg:grid-cols-3',
+            'xl:gap-y-12 xl:grid-cols-4'
+          )}
         >
-          <PlusCircleIcon className="text-cornflower-blue w-[100px] md:w-[125px] xl:w-[150px]" />
+          <div
+            className="flex justify-center items-center bg-slate-50 rounded-xl p-4 shadow-lg lg:p-6 xl:p-8 hover:bg-white hover:shadow-2xl transition-all cursor-pointer"
+            onClick={() => setIsModalOpen(true)}
+          >
+            <PlusCircleIcon className="text-cornflower-blue w-[100px] md:w-[125px] xl:w-[150px]" />
+          </div>
+          {projects?.map((project) => (
+            <ProjectItem
+              key={project.id}
+              project={project}
+            />
+          ))}
         </div>
-        {[...projects].map((project) => (
-          <ProjectItem key={project.id} project={project} />
-        ))}
-      </div>
+      )}
       <CreateProjectDialog
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
-        userId={userId}
+        accountId={accountId}
       />
     </>
   )
@@ -55,26 +70,43 @@ export default function Projects({
 
 export const getServerSideProps: GetServerSideProps =
   async (context) => {
-    const { userId } = (await getToken({
+    const { accountId } = (await getToken({
       req: context.req,
     })) as JWT
 
-    const projects = await prisma.project.findMany({
-      where: {
-        ownerId: userId,
-      },
-      include: {
-        contributors: true,
-      },
-      orderBy: {
-        name: 'asc',
-      },
+    const queryClient = new QueryClient()
+
+    await queryClient.prefetchQuery({
+      queryKey: ['projects'],
+      queryFn: async () =>
+        await prisma.project.findMany({
+          where: {
+            OR: [
+              {
+                ownerId: accountId,
+              },
+              {
+                contributors: {
+                  some: {
+                    id: accountId,
+                  },
+                },
+              },
+            ],
+          },
+          include: {
+            contributors: true,
+          },
+          orderBy: {
+            name: 'asc',
+          },
+        }),
     })
 
     return {
       props: {
-        data: projects,
-        userId,
+        dehydratedState: dehydrate(queryClient),
+        accountId,
       },
     }
   }
