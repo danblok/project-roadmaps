@@ -6,7 +6,7 @@ import {
 } from '@heroicons/react/20/solid'
 import Link from 'next/link'
 import { Fragment } from 'react'
-import { signOut, useSession } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 
 export default function More() {
   return (
@@ -41,7 +41,7 @@ export default function More() {
                       active
                         ? 'bg-cornflower-blue text-white'
                         : 'text-gray-900'
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    } group flex w-full items-center rounded-md px-2 py-2 text-xl`}
                     href={`/profile`}
                   >
                     <UserCircleIcon
@@ -61,7 +61,7 @@ export default function More() {
                       active
                         ? 'bg-cornflower-blue text-white'
                         : 'text-gray-900'
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    } group flex w-full items-center rounded-md px-2 py-2 text-xl`}
                     href={`/api/auth/signout`}
                     onClick={(e) => {
                       e.preventDefault()
