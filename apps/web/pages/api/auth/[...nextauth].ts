@@ -20,21 +20,24 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token }) {
-      const newUser = await prisma.user.upsert({
+      const newUser = await prisma.account.upsert({
         where: {
           email: token.email
         },
         create: {
           email: token.email,
-          name: token.name
+          name: token.name,
+          avatar: token.picture
         },
-        update: {}
+        update: {
+          avatar: token.picture
+        }
       })
-      token.userId = newUser.id
+      token.accountId = newUser.id
       return token
     },
     session({ session, token }) {
-      session.userId = token.userId
+      session.accountId = token.accountId
       return session
     }
   }
