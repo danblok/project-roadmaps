@@ -11,10 +11,7 @@ import { signOut } from 'next-auth/react'
 export default function More() {
   return (
     <div className="absolute text-left -right-5">
-      <Menu
-        as="div"
-        className="relative inline-block text-left"
-      >
+      <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex justify-center rounded-md bg-white bg-opacity-20 pl-9 py-2 text-sm font-medium text-black hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
             <ChevronDownIcon
@@ -38,9 +35,7 @@ export default function More() {
                 {({ active }) => (
                   <Link
                     className={`${
-                      active
-                        ? 'bg-cornflower-blue text-white'
-                        : 'text-gray-900'
+                      active ? 'bg-cornflower-blue text-white' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-xl`}
                     href={`/profile`}
                   >
@@ -58,9 +53,7 @@ export default function More() {
                 {({ active }) => (
                   <a
                     className={`${
-                      active
-                        ? 'bg-cornflower-blue text-white'
-                        : 'text-gray-900'
+                      active ? 'bg-cornflower-blue text-white' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-xl`}
                     href={`/api/auth/signout`}
                     onClick={(e) => {

@@ -1,7 +1,10 @@
-import { prisma } from "database";
-import { NextApiRequest, NextApiResponse } from "next";
+import { prisma } from 'database'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (!req.query.id || typeof req.query.id !== 'string') {
     return res.status(404).json({ error: 'query error: missing id' })
   }
@@ -23,9 +26,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (
-    req.method === 'PATCH'
-    && req.query.contributorId
-    && typeof req.query.contributorId === 'string'
+    req.method === 'PATCH' &&
+    req.query.contributorId &&
+    typeof req.query.contributorId === 'string'
   ) {
     await prisma.project.update({
       where: {
@@ -34,14 +37,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       data: {
         contributors: {
           connect: {
-            id: req.query.contributorId
-          }
-        }
-      }
+            id: req.query.contributorId,
+          },
+        },
+      },
     })
     return res.status(200).send({})
   }
-
 
   if (req.method === 'PATCH') {
     await prisma.project.update({
@@ -49,15 +51,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         id: req.query.id,
       },
       data: {
-        ...req.body
-      }
+        ...req.body,
+      },
     })
     return res.status(200).send({})
   }
 
-  if (req.method === 'DELETE'
-    && req.query.contributorId
-    && typeof req.query.contributorId === 'string'
+  if (
+    req.method === 'DELETE' &&
+    req.query.contributorId &&
+    typeof req.query.contributorId === 'string'
   ) {
     await prisma.project.update({
       where: {
@@ -66,10 +69,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       data: {
         contributors: {
           disconnect: {
-            id: req.query.contributorId
-          }
-        }
-      }
+            id: req.query.contributorId,
+          },
+        },
+      },
     })
     return res.status(200).send({})
   }
@@ -78,25 +81,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await prisma.$transaction([
       prisma.project.update({
         where: {
-          id: req.query.id
+          id: req.query.id,
         },
         data: {
           contributors: {
-            set: []
+            set: [],
           },
           tasks: {
-            deleteMany: {}
+            deleteMany: {},
           },
           statuses: {
-            deleteMany: {}
+            deleteMany: {},
           },
-        }
+        },
       }),
       prisma.project.delete({
         where: {
-          id: req.query.id
-        }
-      })
+          id: req.query.id,
+        },
+      }),
     ])
 
     return res.status(200).send({})

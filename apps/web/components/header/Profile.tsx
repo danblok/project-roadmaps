@@ -19,11 +19,7 @@ export const Profile = ({
         className={'rounded-full'}
       />
     ) : (
-      <UserIcon
-        width={40}
-        height={40}
-        className="text-cornflower-blue"
-      />
+      <UserIcon width={40} height={40} className="text-cornflower-blue" />
     )}
     <More />
   </div>

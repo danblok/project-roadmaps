@@ -86,7 +86,5 @@ export default async function handler(
     return res.status(200).send({ data: account })
   }
 
-  return res
-    .status(404)
-    .send({ error: 'unknown request method' })
+  return res.status(404).send({ error: 'unknown request method' })
 }

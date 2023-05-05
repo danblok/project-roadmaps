@@ -1,9 +1,5 @@
 import Head from 'next/head'
-import {
-  QueryClient,
-  dehydrate,
-  useQuery,
-} from '@tanstack/react-query'
+import { QueryClient, dehydrate, useQuery } from '@tanstack/react-query'
 import { getProject } from '@/api/project'
 import Loader from '@/components/Loader'
 import { GetServerSideProps } from 'next'
@@ -11,11 +7,7 @@ import { prisma } from 'database'
 import { JWT, getToken } from 'next-auth/jwt'
 import { Tab } from '@headlessui/react'
 import clsx from 'clsx'
-import {
-  Contributors,
-  Settings,
-  View,
-} from '@/components/projects'
+import { Contributors, Settings, View } from '@/components/projects'
 import { ProjectContext } from '@/components/projects/ProjectContext'
 
 type ProjectProps = {
@@ -23,18 +15,13 @@ type ProjectProps = {
   id: string
 }
 
-export default function ProjectPage({
-  accountId,
-  id,
-}: ProjectProps) {
-  const { data: project, isLoading: isProjectLoading } =
-    useQuery({
-      queryKey: ['project'],
-      queryFn: async () => await getProject(id),
-    })
+export default function ProjectPage({ accountId, id }: ProjectProps) {
+  const { data: project, isLoading: isProjectLoading } = useQuery({
+    queryKey: ['project'],
+    queryFn: async () => await getProject(id),
+  })
 
-  const isSessionUserNotOwner =
-    accountId !== project?.ownerId
+  const isSessionUserNotOwner = accountId !== project?.ownerId
 
   return (
     <>
@@ -98,27 +85,17 @@ export default function ProjectPage({
           {isProjectLoading || !project ? (
             <Loader />
           ) : (
-            <ProjectContext.Provider
-              value={{ project, isProjectLoading }}
-            >
-              <Tab.Panel
-                className={clsx('rounded-xl bg-white p-3')}
-              >
+            <ProjectContext.Provider value={{ project, isProjectLoading }}>
+              <Tab.Panel className={clsx('rounded-xl bg-white p-3')}>
                 <View />
               </Tab.Panel>
-              <Tab.Panel
-                className={clsx('rounded-xl bg-white p-3')}
-              >
+              <Tab.Panel className={clsx('rounded-xl bg-white p-3')}>
                 Tasks
               </Tab.Panel>
-              <Tab.Panel
-                className={clsx('rounded-xl bg-white p-3')}
-              >
+              <Tab.Panel className={clsx('rounded-xl bg-white p-3')}>
                 <Contributors />
               </Tab.Panel>
-              <Tab.Panel
-                className={clsx('rounded-xl bg-white p-3')}
-              >
+              <Tab.Panel className={clsx('rounded-xl bg-white p-3')}>
                 <Settings />
               </Tab.Panel>
             </ProjectContext.Provider>
@@ -129,45 +106,47 @@ export default function ProjectPage({
   )
 }
 
-export const getServerSideProps: GetServerSideProps =
-  async ({ params, req }) => {
-    const { sub, ...account } = (await getToken({
-      req: req,
-    })) as JWT
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+}) => {
+  const { sub, ...account } = (await getToken({
+    req: req,
+  })) as JWT
 
-    const id = params?.id
-    if (!id || typeof id !== 'string') {
-      return {
-        notFound: true,
-      }
-    }
-
-    const project = await prisma.project.findUnique({
-      where: {
-        id,
-      },
-      include: {
-        contributors: true,
-        owner: true,
-        statuses: true,
-        tasks: true,
-      },
-    })
-
-    if (!project) {
-      return {
-        notFound: true,
-      }
-    }
-
-    const queryClient = new QueryClient()
-    queryClient.setQueryData(['project'], project)
-
+  const id = params?.id
+  if (!id || typeof id !== 'string') {
     return {
-      props: {
-        id,
-        accountId: account.accountId,
-        dehydratedState: dehydrate(queryClient),
-      },
+      notFound: true,
     }
   }
+
+  const project = await prisma.project.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      contributors: true,
+      owner: true,
+      statuses: true,
+      tasks: true,
+    },
+  })
+
+  if (!project) {
+    return {
+      notFound: true,
+    }
+  }
+
+  const queryClient = new QueryClient()
+  queryClient.setQueryData(['project'], project)
+
+  return {
+    props: {
+      id,
+      accountId: account.accountId,
+      dehydratedState: dehydrate(queryClient),
+    },
+  }
+}

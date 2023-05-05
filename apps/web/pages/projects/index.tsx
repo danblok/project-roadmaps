@@ -1,9 +1,5 @@
 import Loader from '@/components/Loader'
-import {
-  QueryClient,
-  dehydrate,
-  useQuery,
-} from '@tanstack/react-query'
+import { QueryClient, dehydrate, useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { prisma } from 'database'
 import { GetServerSideProps } from 'next'
@@ -12,18 +8,13 @@ import Head from 'next/head'
 import { PlusCircleIcon } from '@heroicons/react/20/solid'
 import { useState } from 'react'
 import { getProjects } from '@/api/project'
-import {
-  CreateProjectDialog,
-  ProjectItem,
-} from '@/components/projects'
+import { CreateProjectDialog, ProjectItem } from '@/components/projects'
 
 type ProjectsProps = {
   accountId: string
 }
 
-export default function Projects({
-  accountId,
-}: ProjectsProps) {
+export default function Projects({ accountId }: ProjectsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { data: projects, isLoading } = useQuery({
     queryKey: ['projects'],
@@ -52,10 +43,7 @@ export default function Projects({
             <PlusCircleIcon className="text-cornflower-blue w-[100px] md:w-[125px] xl:w-[150px]" />
           </div>
           {projects?.map((project) => (
-            <ProjectItem
-              key={project.id}
-              project={project}
-            />
+            <ProjectItem key={project.id} project={project} />
           ))}
         </div>
       )}
@@ -68,45 +56,44 @@ export default function Projects({
   )
 }
 
-export const getServerSideProps: GetServerSideProps =
-  async (context) => {
-    const { accountId } = (await getToken({
-      req: context.req,
-    })) as JWT
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { accountId } = (await getToken({
+    req: context.req,
+  })) as JWT
 
-    const queryClient = new QueryClient()
+  const queryClient = new QueryClient()
 
-    await queryClient.prefetchQuery({
-      queryKey: ['projects'],
-      queryFn: async () =>
-        await prisma.project.findMany({
-          where: {
-            OR: [
-              {
-                ownerId: accountId,
-              },
-              {
-                contributors: {
-                  some: {
-                    id: accountId,
-                  },
+  await queryClient.prefetchQuery({
+    queryKey: ['projects'],
+    queryFn: async () =>
+      await prisma.project.findMany({
+        where: {
+          OR: [
+            {
+              ownerId: accountId,
+            },
+            {
+              contributors: {
+                some: {
+                  id: accountId,
                 },
               },
-            ],
-          },
-          include: {
-            contributors: true,
-          },
-          orderBy: {
-            name: 'asc',
-          },
-        }),
-    })
+            },
+          ],
+        },
+        include: {
+          contributors: true,
+        },
+        orderBy: {
+          name: 'asc',
+        },
+      }),
+  })
 
-    return {
-      props: {
-        dehydratedState: dehydrate(queryClient),
-        accountId,
-      },
-    }
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+      accountId,
+    },
   }
+}

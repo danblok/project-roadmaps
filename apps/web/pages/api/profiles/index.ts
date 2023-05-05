@@ -1,8 +1,11 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from 'database'
-import { getToken } from "next-auth/jwt";
+import { getToken } from 'next-auth/jwt'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const token = await getToken({ req })
 
   if (req.method === 'GET') {
@@ -14,20 +17,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         OR: [
           {
             name: {
-              mode: "insensitive",
-              contains: req.query.filter
-            }
+              mode: 'insensitive',
+              contains: req.query.filter,
+            },
           },
           {
             email: {
-              mode: "insensitive",
-              contains: req.query.filter
-            }
-          }
-        ]
+              mode: 'insensitive',
+              contains: req.query.filter,
+            },
+          },
+        ],
       },
     })
-
 
     return res.status(200).send({ data: accounts })
   }

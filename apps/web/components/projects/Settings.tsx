@@ -1,9 +1,6 @@
 import { updateProject } from '@/api/project'
 import { UpdateProjectInput } from '@/api/types'
-import {
-  useQueryClient,
-  useMutation,
-} from '@tanstack/react-query'
+import { useQueryClient, useMutation } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -33,9 +30,7 @@ export default function Settings() {
     formState: { errors },
   } = useForm<SettingsFormData>()
 
-  const onSubmit: SubmitHandler<SettingsFormData> = async (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<SettingsFormData> = async (data) => {
     await mutation.mutateAsync(
       { ...data, id: project.id },
       {
@@ -51,9 +46,7 @@ export default function Settings() {
   return (
     <>
       <Title title="Project Settings" />
-      {(mutation.isLoading || isProjectLoading) && (
-        <Loader />
-      )}
+      {(mutation.isLoading || isProjectLoading) && <Loader />}
       <div className="my-6 flex flex-col md:flex-row gap-4 md:justify-around">
         <div className="basis-1/2 lg:basis-1/3 mx-4 border-b pb-6 border-b-gray md:border-b-0">
           <h3 className="text-xl font-bold text-cornflower-blue">
@@ -68,9 +61,7 @@ export default function Settings() {
           >
             <ErrorFieldMessageWrapper error={errors.name}>
               <label>
-                <span className="text-lg block">
-                  Project name
-                </span>
+                <span className="text-lg block">Project name</span>
                 <input
                   {...register('name', {
                     required: 'Name is required',
@@ -84,24 +75,18 @@ export default function Settings() {
                   className={clsx(
                     'border-2 border-slate-400 rounded-md',
                     'px-2 mt-2 w-full',
-                    errors.name &&
-                      'focus:border-bittersweet',
-                    (isProjectLoading ||
-                      mutation.isLoading) &&
+                    errors.name && 'focus:border-bittersweet',
+                    (isProjectLoading || mutation.isLoading) &&
                       'bg-opacity-100 text-cornflower-blue'
                   )}
                   placeholder="Your project name"
                   disabled={mutation.isLoading}
-                  aria-invalid={
-                    errors.name ? 'true' : 'false'
-                  }
+                  aria-invalid={errors.name ? 'true' : 'false'}
                 />
               </label>
             </ErrorFieldMessageWrapper>
             <label className="my-4">
-              <span className="text-lg">
-                Project description
-              </span>
+              <span className="text-lg">Project description</span>
               <textarea
                 {...register('description', {
                   value: project.description,
@@ -110,18 +95,14 @@ export default function Settings() {
                 className={clsx(
                   'border-2 border-slate-400 rounded-md',
                   'px-2 mt-2 w-full max-h-32',
-                  (isProjectLoading ||
-                    mutation.isLoading) &&
+                  (isProjectLoading || mutation.isLoading) &&
                     'bg-opacity-100 text-cornflower-blue'
                 )}
                 placeholder="Description text"
                 disabled={mutation.isLoading}
               />
             </label>
-            <ActionButton
-              isActionLoading={mutation.isLoading}
-              type="submit"
-            >
+            <ActionButton isActionLoading={mutation.isLoading} type="submit">
               Update
             </ActionButton>
           </form>
@@ -139,10 +120,7 @@ export default function Settings() {
           </ActionButton>
         </div>
       </div>
-      <DeleteProjectDialog
-        isOpen={isDialogOpen}
-        setIsOpen={setIsDialogOpen}
-      />
+      <DeleteProjectDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} />
     </>
   )
 }

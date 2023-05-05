@@ -3,9 +3,9 @@ import formsPlugin from '@tailwindcss/forms'
 
 export default {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
@@ -16,15 +16,12 @@ export default {
         'uranian-blue': '#B9E6FF',
         'cornflower-blue': '#5C95FF',
         'tifanny-blue': '#99E1D9',
-        'bittersweet': '#F25F5C'
+        bittersweet: '#F25F5C',
       },
       gridTemplateRows: {
-        'main-layout': 'auto 1fr auto'
-      }
+        'main-layout': 'auto 1fr auto',
+      },
     },
   },
-  plugins: [
-    formsPlugin
-  ],
+  plugins: [formsPlugin],
 } satisfies Config
-

@@ -1,8 +1,5 @@
 import clsx from 'clsx'
-import {
-  ComponentPropsWithoutRef,
-  PropsWithChildren,
-} from 'react'
+import { ComponentPropsWithoutRef, PropsWithChildren } from 'react'
 
 type ActionButtonProps = {
   isActionLoading?: boolean
@@ -15,10 +12,7 @@ export default function ActionButton({
   ...props
 }: PropsWithChildren<
   ActionButtonProps &
-    Pick<
-      ComponentPropsWithoutRef<'button'>,
-      'type' | 'onClick'
-    >
+    Pick<ComponentPropsWithoutRef<'button'>, 'type' | 'onClick'>
 >) {
   return (
     <button

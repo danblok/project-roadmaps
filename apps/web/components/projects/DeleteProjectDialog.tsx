@@ -1,10 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 import FormModal from '../FormModal'
 import { deleteProject } from '@/api/project'
-import {
-  useQueryClient,
-  useMutation,
-} from '@tanstack/react-query'
+import { useQueryClient, useMutation } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -63,15 +60,12 @@ export default function DeleteProjectDialog({
     >
       <div className="mt-4">
         <p className="text-sm text-gray-500">
-          Deleting the project will also delete all data
-          related to it.
+          Deleting the project will also delete all data related to it.
         </p>
         <p className="text-sm text-gray-500">
           In order to delete project, type in{' '}
-          <span className="text-bittersweet font-bold">
-            {project.name}
-          </span>{' '}
-          and press the button
+          <span className="text-bittersweet font-bold">{project.name}</span> and
+          press the button
         </p>
       </div>
       <form
@@ -87,8 +81,7 @@ export default function DeleteProjectDialog({
               {...register('name', {
                 required: 'Name is required',
                 validate: (value) =>
-                  value === project.name ||
-                  'Match with your name',
+                  value === project.name || 'Match with your name',
                 value: '',
               })}
               type="text"
@@ -103,10 +96,7 @@ export default function DeleteProjectDialog({
             />
           </label>
         </ErrorFieldMessageWrapper>
-        <ActionButton
-          type="submit"
-          isActionLoading={mutation.isLoading}
-        >
+        <ActionButton type="submit" isActionLoading={mutation.isLoading}>
           Delete Project
         </ActionButton>
       </form>

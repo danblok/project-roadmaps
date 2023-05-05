@@ -9,18 +9,9 @@ import {
   CheckIcon,
   PlusIcon,
 } from '@heroicons/react/20/solid'
-import {
-  useQueryClient,
-  useQuery,
-  useMutation,
-} from '@tanstack/react-query'
+import { useQueryClient, useQuery, useMutation } from '@tanstack/react-query'
 
-import {
-  ComponentPropsWithoutRef,
-  useState,
-  useEffect,
-  Fragment,
-} from 'react'
+import { ComponentPropsWithoutRef, useState, useEffect, Fragment } from 'react'
 import Loader from '../Loader'
 import useProjectContext from './ProjectContext'
 import ActionButton from '../ActionButton'
@@ -56,9 +47,7 @@ export default function ContributorSearchComboBox({
   function handleAdd() {
     if (
       selected &&
-      !project.contributors
-        .map((c) => c.id)
-        .includes(selected.id)
+      !project.contributors.map((c) => c.id).includes(selected.id)
     ) {
       mutation.mutate(
         {
@@ -83,9 +72,7 @@ export default function ContributorSearchComboBox({
             <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
               <Combobox.Input
                 className="w-full border-none py-2 pl-3 pr-10 text-lg leading-5 text-gray-900 focus:ring-0 text-center"
-                displayValue={(account: Account) =>
-                  account.name
-                }
+                displayValue={(account: Account) => account.name}
                 onChange={(event) => {
                   setFilterInput(event.target.value)
                 }}
@@ -128,9 +115,7 @@ export default function ContributorSearchComboBox({
                         <>
                           <span
                             className={`block truncate ${
-                              selected
-                                ? 'font-medium'
-                                : 'font-normal'
+                              selected ? 'font-medium' : 'font-normal'
                             }`}
                           >
                             {account.name} {account.email}
@@ -138,9 +123,7 @@ export default function ContributorSearchComboBox({
                           {selected ? (
                             <span
                               className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                active
-                                  ? 'text-white'
-                                  : 'text-cornflower-blue'
+                                active ? 'text-white' : 'text-cornflower-blue'
                               }`}
                             >
                               <CheckIcon
@@ -159,16 +142,8 @@ export default function ContributorSearchComboBox({
           </div>
         </Combobox>
       </div>
-      <ActionButton
-        type="button"
-        samePadding
-        onClick={handleAdd}
-      >
-        <PlusIcon
-          width={20}
-          height={20}
-          className="white"
-        />
+      <ActionButton type="button" samePadding onClick={handleAdd}>
+        <PlusIcon width={20} height={20} className="white" />
       </ActionButton>
     </div>
   )

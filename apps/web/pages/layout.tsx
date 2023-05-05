@@ -2,9 +2,7 @@ import { PropsWithChildren } from 'react'
 import Footer from '../components/footer'
 import Header from '@/components/header/header'
 
-export default function Layout({
-  children,
-}: PropsWithChildren) {
+export default function Layout({ children }: PropsWithChildren) {
   return (
     <div className="h-screen grid grid-rows-main-layout">
       <Header />

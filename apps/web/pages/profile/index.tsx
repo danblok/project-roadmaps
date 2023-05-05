@@ -1,19 +1,11 @@
-import {
-  deleteProfile,
-  getProfile,
-  updateProfile,
-} from '@/api/profile'
+import { deleteProfile, getProfile, updateProfile } from '@/api/profile'
 import { UpdateAccountInput } from '@/api/types'
 import ActionButton from '@/components/ActionButton'
 import ErrorFieldMessageWrapper from '@/components/ErrorFieldWrapper'
 import FormModal from '@/components/FormModal'
 import Loader from '@/components/Loader'
 import { Title } from '@/components/Title'
-import {
-  CubeIcon,
-  Squares2X2Icon,
-  UserIcon,
-} from '@heroicons/react/20/solid'
+import { CubeIcon, Squares2X2Icon, UserIcon } from '@heroicons/react/20/solid'
 import {
   QueryClient,
   dehydrate,
@@ -37,9 +29,7 @@ type ProfileProps = {
 
 type FormData = UpdateAccountInput
 
-export default function Profile({
-  sessionUser,
-}: ProfileProps) {
+export default function Profile({ sessionUser }: ProfileProps) {
   const queryClient = useQueryClient()
   const { data: account, isLoading } = useQuery(
     ['account'],
@@ -51,8 +41,7 @@ export default function Profile({
     },
   })
 
-  const [deleteDialogIsOpen, setDeleteDialogIsOpen] =
-    useState(false)
+  const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false)
 
   const {
     handleSubmit,
@@ -60,9 +49,7 @@ export default function Profile({
     formState: { errors },
   } = useForm<FormData>()
 
-  const onSubmit: SubmitHandler<FormData> = async (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     await updateMutation.mutateAsync(data, {
       onSuccess: () => {
         queryClient.invalidateQueries({
@@ -78,15 +65,10 @@ export default function Profile({
         <title>My profile</title>
       </Head>
       <div className="bg-white mx-6 rounded-xl">
-        {(isLoading || updateMutation.isLoading) && (
-          <Loader />
-        )}
+        {(isLoading || updateMutation.isLoading) && <Loader />}
         <Title title="Profile settings" />
         <div className="mt-4 p-4 lg:p-8 md:flex flex-nowrap items-start">
-          <Avatar
-            name={sessionUser.name}
-            picture={sessionUser.picture}
-          />
+          <Avatar name={sessionUser.name} picture={sessionUser.picture} />
           <div className="mt-4 lg:mt-0 flex-grow">
             <form
               className="flex flex-col border-b border-slate-200 pb-6"
@@ -108,8 +90,7 @@ export default function Profile({
                   className={clsx(
                     'border-2 border-slate-400 rounded-md',
                     'px-2 mt-4 w-full sm:w-1/2 bg-cornflower-blue bg-opacity-20',
-                    (isLoading ||
-                      updateMutation.isLoading) &&
+                    (isLoading || updateMutation.isLoading) &&
                       'bg-opacity-100 text-cornflower-blue'
                   )}
                   disabled
@@ -138,17 +119,13 @@ export default function Profile({
                   className={clsx(
                     'border-2 border-slate-400 rounded-md',
                     'px-2 mt-4 w-full sm:w-1/2',
-                    (isLoading ||
-                      updateMutation.isLoading) &&
+                    (isLoading || updateMutation.isLoading) &&
                       'bg-cornflower-blue text-cornflower-blue',
-                    errors.name &&
-                      'focus:border-bittersweet'
+                    errors.name && 'focus:border-bittersweet'
                   )}
                   placeholder="Your name"
                   disabled={updateMutation.isLoading}
-                  aria-invalid={
-                    errors.name ? 'true' : 'false'
-                  }
+                  aria-invalid={errors.name ? 'true' : 'false'}
                 />
               </ErrorFieldMessageWrapper>
               <div className="mt-4">
@@ -168,9 +145,7 @@ export default function Profile({
                 />
                 <ActionButton
                   type="button"
-                  onClick={() =>
-                    setDeleteDialogIsOpen(true)
-                  }
+                  onClick={() => setDeleteDialogIsOpen(true)}
                 >
                   Delete Account
                 </ActionButton>
@@ -189,42 +164,41 @@ export default function Profile({
   )
 }
 
-export const getServerSideProps: GetServerSideProps =
-  async (context) => {
-    const { sub, ...account } = (await getToken({
-      req: context.req,
-    })) as JWT
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { sub, ...account } = (await getToken({
+    req: context.req,
+  })) as JWT
 
-    const queryClient = new QueryClient()
-    await queryClient.prefetchQuery(
-      ['account'],
-      async () =>
-        await prisma.account.findUnique({
-          where: {
-            id: account.accountId,
-          },
-          include: {
-            ownedProjects: {
-              select: {
-                _count: true,
-              },
-            },
-            projects: {
-              select: {
-                _count: true,
-              },
+  const queryClient = new QueryClient()
+  await queryClient.prefetchQuery(
+    ['account'],
+    async () =>
+      await prisma.account.findUnique({
+        where: {
+          id: account.accountId,
+        },
+        include: {
+          ownedProjects: {
+            select: {
+              _count: true,
             },
           },
-        })
-    )
+          projects: {
+            select: {
+              _count: true,
+            },
+          },
+        },
+      })
+  )
 
-    return {
-      props: {
-        sessionUser: account,
-        dehydratedState: dehydrate(queryClient),
-      },
-    }
+  return {
+    props: {
+      sessionUser: account,
+      dehydratedState: dehydrate(queryClient),
+    },
   }
+}
 
 const Avatar = ({
   name,
@@ -245,11 +219,7 @@ const Avatar = ({
           priority
         />
       ) : (
-        <UserIcon
-          width={160}
-          height={160}
-          className="text-cornflower-blue"
-        />
+        <UserIcon width={160} height={160} className="text-cornflower-blue" />
       )}
     </div>
   )
@@ -272,9 +242,7 @@ const ExtraInfo = ({
             className="inline mr-2 text-cornflower-blue"
           />{' '}
           You own{' '}
-          <span className="text-cornflower-blue font-bold">
-            {owned}{' '}
-          </span>
+          <span className="text-cornflower-blue font-bold">{owned} </span>
           projects
         </p>
       </div>
@@ -286,9 +254,7 @@ const ExtraInfo = ({
             className="inline mr-2 text-cornflower-blue"
           />{' '}
           You have contributed in{' '}
-          <span className="text-cornflower-blue font-bold">
-            {contributed}{' '}
-          </span>
+          <span className="text-cornflower-blue font-bold">{contributed} </span>
           projects
         </p>
       </div>
@@ -349,16 +315,13 @@ function DeleteDialog({
     >
       <div className="mt-4">
         <p className="text-sm text-gray-500">
-          Deleting your account will purge all of your
-          projects and remove you out of all the projects
-          you contribute.
+          Deleting your account will purge all of your projects and remove you
+          out of all the projects you contribute.
         </p>
         <p className="text-sm text-gray-500">
           In order to delete account, type in{' '}
-          <span className="text-bittersweet font-bold">
-            {email}
-          </span>{' '}
-          and press the button
+          <span className="text-bittersweet font-bold">{email}</span> and press
+          the button
         </p>
       </div>
       <form
@@ -373,9 +336,7 @@ function DeleteDialog({
               {...register('email', {
                 required: 'Email is required',
 
-                validate: (value) =>
-                  value === email ||
-                  'Match with your email',
+                validate: (value) => value === email || 'Match with your email',
                 value: '',
               })}
               name="email"

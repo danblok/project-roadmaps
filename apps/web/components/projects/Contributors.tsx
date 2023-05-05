@@ -1,10 +1,7 @@
 import { removeContributor } from '@/api/project'
 import { AddRemoveContributorInput } from '@/api/types'
 import { XMarkIcon } from '@heroicons/react/20/solid'
-import {
-  useQueryClient,
-  useMutation,
-} from '@tanstack/react-query'
+import { useQueryClient, useMutation } from '@tanstack/react-query'
 import Loader from '../Loader'
 import { Title } from '../Title'
 import ContributorItem from './ContributorItem'
@@ -56,15 +53,11 @@ export default function Contributors() {
                 key={contributor.id}
                 className="flex flex-nowrap items-center gap-2"
               >
-                <ContributorItem
-                  contributor={contributor}
-                />
+                <ContributorItem contributor={contributor} />
                 <ActionButton
                   type="button"
                   samePadding
-                  onClick={async () =>
-                    await handleDelete(contributor.id)
-                  }
+                  onClick={async () => await handleDelete(contributor.id)}
                 >
                   <XMarkIcon width={20} height={20} />
                 </ActionButton>

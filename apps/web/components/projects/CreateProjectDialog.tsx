@@ -1,9 +1,6 @@
 import { addProject } from '@/api/project'
 import { AddProjectInput } from '@/api/types'
-import {
-  useQueryClient,
-  useMutation,
-} from '@tanstack/react-query'
+import { useQueryClient, useMutation } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { Dispatch, SetStateAction } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -38,9 +35,7 @@ export default function CreateProjectDialog({
     reset,
   } = useForm<FormData>()
 
-  const onSubmit: SubmitHandler<FormData> = async (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     await mutation.mutateAsync(
       {
         ...data,
@@ -72,8 +67,8 @@ export default function CreateProjectDialog({
     >
       <div className="mt-4">
         <p className="text-sm text-gray-500">
-          Fill the name and the discription (optional)
-          fields to create a new project
+          Fill the name and the discription (optional) fields to create a new
+          project
         </p>
       </div>
 
@@ -119,10 +114,7 @@ export default function CreateProjectDialog({
             disabled={mutation.isLoading}
           />
         </label>
-        <ActionButton
-          type="submit"
-          isActionLoading={mutation.isLoading}
-        >
+        <ActionButton type="submit" isActionLoading={mutation.isLoading}>
           Create
         </ActionButton>
       </form>

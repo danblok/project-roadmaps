@@ -14,9 +14,7 @@ export default function Header() {
         <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
       </noscript>
       <div
-        className={
-          'p-6 sm:p-8 flex justify-around sm:justify-end items-center'
-        }
+        className={'p-6 sm:p-8 flex justify-around sm:justify-end items-center'}
       >
         <Nav />
         <div
@@ -31,10 +29,7 @@ export default function Header() {
         >
           {!session && <SignIn loading={loading} />}
           {session?.user && (
-            <Profile
-              image={session.user.image}
-              name={session.user.name}
-            />
+            <Profile image={session.user.image} name={session.user.name} />
           )}
         </div>
       </div>

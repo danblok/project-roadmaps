@@ -1,4 +1,3 @@
-
 export const trimText = (text: string, n: number) => {
   if (text.length <= n) {
     return text

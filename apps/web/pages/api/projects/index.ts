@@ -1,10 +1,13 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from 'database'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method === 'POST') {
     const project = await prisma.project.create({
-      data: req.body
+      data: req.body,
     })
     return res.status(201).send({ data: project })
   }
@@ -22,14 +25,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           {
             contributors: {
               some: {
-                id: req.query.accountId
+                id: req.query.accountId,
               },
             },
           },
         ],
       },
       include: {
-        contributors: true
+        contributors: true,
       },
       orderBy: {
         name: 'asc',
