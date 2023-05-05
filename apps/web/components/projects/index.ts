@@ -1,7 +1,7 @@
 export { default as Settings } from './Settings'
 export { default as useProjectContext } from './ProjectContext'
 export { default as ContributorItem } from './ContributorItem'
-export { default as DeleteAccountDialog } from './DeleteAccountDialog'
+export { default as DeleteAccountDialog } from './DeleteProjectDialog'
 export { default as Contributors } from './Contributors'
 export { default as ContributorSearchComboBox } from './ContributorSearchComboBox'
 export { default as View } from './View'
