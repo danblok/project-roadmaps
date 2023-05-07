@@ -17,12 +17,24 @@ export default async function handler(
       include: {
         contributors: true,
         owner: true,
-        statuses: true,
         tasks: true,
       },
     })
 
-    return res.status(200).send({ data: project })
+    const statuses = await prisma.status.findMany({
+      where: {
+        OR: [
+          {
+            projectId: req.query.id,
+          },
+          {
+            projectId: null,
+          },
+        ],
+      },
+    })
+
+    return res.status(200).send({ data: { ...project, statuses } })
   }
 
   if (
