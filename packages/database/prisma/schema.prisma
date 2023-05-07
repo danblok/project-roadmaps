@@ -38,7 +38,7 @@ model Project {
 model Task {
   id        String   @id @default(uuid())
   name      String   @db.VarChar(100)
-  Comments  String   @default("")
+  comments  String   @default("")
   status    Status   @relation(fields: [statusId], references: [id])
   statusId  String
   from      DateTime @default(now())
