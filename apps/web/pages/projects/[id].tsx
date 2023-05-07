@@ -9,6 +9,7 @@ import { Tab } from '@headlessui/react'
 import clsx from 'clsx'
 import { Contributors, Settings, View } from '@/components/projects'
 import { ProjectContext } from '@/components/projects/ProjectContext'
+import { Tasks } from '@/components/projects/Tasks'
 
 type ProjectProps = {
   accountId: string
@@ -90,7 +91,7 @@ export default function ProjectPage({ accountId, id }: ProjectProps) {
                 <View />
               </Tab.Panel>
               <Tab.Panel className={clsx('rounded-xl bg-white p-3')}>
-                Tasks
+                <Tasks />
               </Tab.Panel>
               <Tab.Panel className={clsx('rounded-xl bg-white p-3')}>
                 <Contributors />
@@ -129,7 +130,11 @@ export const getServerSideProps: GetServerSideProps = async ({
       contributors: true,
       owner: true,
       statuses: true,
-      tasks: true,
+      tasks: {
+        include: {
+          status: true,
+        },
+      },
     },
   })
 
