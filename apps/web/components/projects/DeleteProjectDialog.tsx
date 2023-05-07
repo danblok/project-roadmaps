@@ -9,7 +9,7 @@ import ErrorFieldMessageWrapper from '../ErrorFieldWrapper'
 import useProjectContext from './ProjectContext'
 import ActionButton from '../ActionButton'
 
-type DeleteAccountDialogProps = {
+type DeleteProjectDialogProps = {
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }
@@ -17,10 +17,11 @@ type DeleteAccountDialogProps = {
 export default function DeleteProjectDialog({
   isOpen,
   setIsOpen,
-}: DeleteAccountDialogProps) {
+}: DeleteProjectDialogProps) {
   const { project } = useProjectContext()
   const router = useRouter()
   const queryClient = useQueryClient()
+
   const mutation = useMutation({
     mutationFn: (projectId: string) => {
       return deleteProject(projectId)

@@ -31,6 +31,7 @@ type FormData = UpdateAccountInput
 
 export default function Profile({ sessionUser }: ProfileProps) {
   const queryClient = useQueryClient()
+
   const { data: account, isLoading } = useQuery(
     ['account'],
     async () => await getProfile(sessionUser.accountId)

@@ -8,7 +8,7 @@ import ErrorFieldMessageWrapper from '../ErrorFieldWrapper'
 import FormModal from '../FormModal'
 import ActionButton from '../ActionButton'
 
-type CreateTaskDialogProps = {
+type CreateProjectDialogProps = {
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
   accountId: string
@@ -20,7 +20,7 @@ export default function CreateProjectDialog({
   isOpen,
   setIsOpen,
   accountId,
-}: CreateTaskDialogProps) {
+}: CreateProjectDialogProps) {
   const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: (project: AddProjectInput) => {
@@ -44,7 +44,7 @@ export default function CreateProjectDialog({
       {
         onSuccess: () => {
           queryClient.invalidateQueries({
-            queryKey: ['projects'],
+            queryKey: ['project'],
           })
         },
       }
