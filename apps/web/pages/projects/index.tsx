@@ -16,10 +16,12 @@ type ProjectsProps = {
 
 export default function Projects({ accountId }: ProjectsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
+
   const { data: projects, isLoading } = useQuery({
     queryKey: ['projects'],
     queryFn: async () => await getProjects(accountId),
   })
+
   return (
     <>
       <Head>

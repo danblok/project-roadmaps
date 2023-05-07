@@ -4,7 +4,7 @@ import { TaskItem } from './TaskItem'
 import { Title } from '../Title'
 import { AddTaskItem } from './AddTaskItem'
 
-export const Tasks = () => {
+export default function Tasks() {
   const { project } = useProjectContext()
   const [editableId, setEditableId] = useState('')
 

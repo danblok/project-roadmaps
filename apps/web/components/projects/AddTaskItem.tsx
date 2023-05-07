@@ -25,13 +25,11 @@ export const AddTaskItem = ({}: AddTaskItemProps) => {
     project.statuses.find((s) => s.name === 'Ready')
   )
 
-  console.log('mark 1')
   const now = new Date()
   const [startDate, setStartDate] = useState<Date | null>(new Date())
   const [endDate, setEndDate] = useState<Date | null>(
     new Date(new Date().setMonth(now.getMonth() + 1))
   )
-  console.log('mark 2')
 
   const handleDateChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates
@@ -64,7 +62,7 @@ export const AddTaskItem = ({}: AddTaskItemProps) => {
       }
     )
   }
-  console.log('mark 3')
+
   return (
     <>
       {mutation.isLoading && <Loader />}

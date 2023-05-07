@@ -9,7 +9,7 @@ import { Tab } from '@headlessui/react'
 import clsx from 'clsx'
 import { Contributors, Settings, View } from '@/components/projects'
 import { ProjectContext } from '@/components/projects/ProjectContext'
-import { Tasks } from '@/components/projects/Tasks'
+import { Tasks } from '@/components/projects'
 
 type ProjectProps = {
   accountId: string
