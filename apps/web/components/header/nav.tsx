@@ -6,7 +6,7 @@ const Nav = () => {
     <nav className="mr-6">
       <ul
         className={clsx(
-          'flex flex-row gap-x-2 items-center justify-between',
+          'flex flex-row gap-x-1 sm:gap-x-2 items-center justify-between',
           'text-xl'
         )}
       >
