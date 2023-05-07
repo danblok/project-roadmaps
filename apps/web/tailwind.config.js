@@ -1,7 +1,7 @@
-import type { Config } from 'tailwindcss'
 import formsPlugin from '@tailwindcss/forms'
 
-export default {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -23,5 +23,5 @@ export default {
       },
     },
   },
-  plugins: [formsPlugin],
-} satisfies Config
+  plugins: [formsPlugin, require('prettier-plugin-tailwindcss')],
+}
