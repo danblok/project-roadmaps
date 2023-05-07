@@ -12,7 +12,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { getDateRange } from '@/utils/dates'
 import Loader from '../Loader'
-import StatusList from './StatusList'
+import Statuses from './Statuses'
 
 type AddTaskItemProps = {}
 type FormData = Pick<Task, 'name' | 'comments'>
@@ -115,11 +115,7 @@ export const AddTaskItem = ({}: AddTaskItemProps) => {
             )}
             minDate={new Date(new Date().setMonth(now.getMonth() - 3))}
           />
-          <StatusList
-            isEditable
-            selected={selected}
-            setSelected={setSelected}
-          />
+          <Statuses isEditable selected={selected} setSelected={setSelected} />
           <ActionButton type="submit" samePadding>
             <PlusIcon width={20} height={20} className="white" />
           </ActionButton>

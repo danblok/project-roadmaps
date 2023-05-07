@@ -10,8 +10,8 @@ import { deleteTask, updateTask } from '@/api/task'
 import Loader from '../Loader'
 import DatePicker from 'react-datepicker'
 import { getDateRange } from '@/utils/dates'
-import StatusList from './StatusList'
 import { Task } from 'database'
+import Statuses from './Statuses'
 
 type TaskItemProps = {
   task: Task
@@ -127,7 +127,7 @@ export const TaskItem = ({
             minDate={new Date(new Date().setMonth(new Date().getMonth() - 3))}
             disabled={!isEditable}
           />
-          <StatusList
+          <Statuses
             isEditable={isEditable}
             selected={selected}
             setSelected={setSelected}

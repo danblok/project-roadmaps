@@ -19,7 +19,7 @@ type StatusListProps = {
   isEditable: boolean
 }
 
-export default function StatusList({
+export default function Statuses({
   selected,
   setSelected,
   isEditable,
