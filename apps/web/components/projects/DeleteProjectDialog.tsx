@@ -39,7 +39,7 @@ export default function DeleteProjectDialog({
     await mutation.mutateAsync(project.id, {
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: ['project'],
+          queryKey: ['projects'],
         })
         setIsOpen(false)
         router.push('/projects')
