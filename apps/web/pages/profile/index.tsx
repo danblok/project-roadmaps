@@ -1,5 +1,5 @@
-import { deleteProfile, getProfile, updateProfile } from '@/api/profile'
-import { UpdateAccountInput } from '@/api/types'
+import { deleteProfile, getProfile, updateProfile } from '@/api-handlers/api/profile'
+import { UpdateAccountInput } from '@/api-handlers/api/types'
 import ActionButton from '@/components/ActionButton'
 import ErrorFieldMessageWrapper from '@/components/ErrorFieldWrapper'
 import FormModal from '@/components/FormModal'

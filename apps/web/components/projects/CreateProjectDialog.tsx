@@ -1,5 +1,5 @@
-import { addProject } from '@/api/project'
-import { AddProjectInput } from '@/api/types'
+import { addProject } from '@/api-handlers/api/project'
+import { AddProjectInput } from '@/api-handlers/api/types'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { Dispatch, SetStateAction } from 'react'

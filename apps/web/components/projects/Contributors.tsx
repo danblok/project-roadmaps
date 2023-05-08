@@ -1,5 +1,5 @@
-import { removeContributor } from '@/api/project'
-import { AddRemoveContributorInput } from '@/api/types'
+import { removeContributor } from '@/api-handlers/api/project'
+import { AddRemoveContributorInput } from '@/api-handlers/api/types'
 import { XMarkIcon } from '@heroicons/react/20/solid'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import Loader from '../Loader'

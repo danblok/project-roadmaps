@@ -1,4 +1,4 @@
-import { AddStatusInput } from '@/api/types'
+import { AddStatusInput } from '@/api-handlers/api/types'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { Dispatch, SetStateAction } from 'react'
@@ -7,7 +7,7 @@ import ActionButton from '../ActionButton'
 import ErrorFieldMessageWrapper from '../ErrorFieldWrapper'
 import FormModal from '../FormModal'
 import useProjectContext from './ProjectContext'
-import { addStatus } from '@/api/status'
+import { addStatus } from '@/api-handlers/api/status'
 
 type CreateStatusDialogProps = {
   isOpen: boolean

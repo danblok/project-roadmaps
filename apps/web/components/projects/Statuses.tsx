@@ -10,7 +10,7 @@ import {
 } from '@heroicons/react/20/solid'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import CreateStatusDialog from './CreateStatusDialog'
-import { deleteStatus } from '@/api/status'
+import { deleteStatus } from '@/api-handlers/api/status'
 import Loader from '../Loader'
 
 type StatusListProps = {

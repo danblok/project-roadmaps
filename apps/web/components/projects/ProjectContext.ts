@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import { getProject } from '@/api/project'
+import { getProject } from '@/api-handlers/api/project'
 
 type ContextValue = {
   project: NonNullable<Awaited<ReturnType<typeof getProject>>>

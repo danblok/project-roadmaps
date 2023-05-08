@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { QueryClient, dehydrate, useQuery } from '@tanstack/react-query'
-import { getProject } from '@/api/project'
+import { getProject } from '@/api-handlers/api/project'
 import Loader from '@/components/Loader'
 import { GetServerSideProps } from 'next'
 import { prisma } from 'database'

@@ -7,7 +7,7 @@ import { JWT, getToken } from 'next-auth/jwt'
 import Head from 'next/head'
 import { PlusCircleIcon } from '@heroicons/react/20/solid'
 import { useState } from 'react'
-import { getProjects } from '@/api/project'
+import { getProjects } from '@/api-handlers/api/project'
 import { CreateProjectDialog, ProjectItem } from '@/components/projects'
 
 type ProjectsProps = {

@@ -1,5 +1,5 @@
-import { updateProject } from '@/api/project'
-import { UpdateProjectInput } from '@/api/types'
+import { updateProject } from '@/api-handlers/api/project'
+import { UpdateProjectInput } from '@/api-handlers/api/types'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useState } from 'react'

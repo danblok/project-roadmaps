@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 import FormModal from '../FormModal'
-import { deleteProject } from '@/api/project'
+import { deleteProject } from '@/api-handlers/api/project'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'

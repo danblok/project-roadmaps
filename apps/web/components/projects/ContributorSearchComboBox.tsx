@@ -1,7 +1,7 @@
 import { Account } from 'database'
-import { getProfiles } from '@/api/profile'
-import { addContributor } from '@/api/project'
-import { AddRemoveContributorInput } from '@/api/types'
+import { getProfiles } from '@/api-handlers/api/profile'
+import { addContributor } from '@/api-handlers/api/project'
+import { AddRemoveContributorInput } from '@/api-handlers/api/types'
 import useDebounce from '@/hooks/useDebounce'
 import { Combobox, Transition } from '@headlessui/react'
 import {
