@@ -17,7 +17,14 @@ export default async function handler(
       include: {
         contributors: true,
         owner: true,
-        tasks: true,
+        tasks: {
+          include: {
+            status: true,
+          },
+          orderBy: {
+            until: 'asc',
+          },
+        },
       },
     })
 
