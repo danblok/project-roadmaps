@@ -44,7 +44,7 @@ export default function CreateProjectDialog({
       {
         onSuccess: () => {
           queryClient.invalidateQueries({
-            queryKey: ['project'],
+            queryKey: ['projects'],
           })
         },
       }
