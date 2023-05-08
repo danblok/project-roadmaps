@@ -5,6 +5,15 @@
     "pipeline": {
         "build": {
             "dependsOn": ["^build"],
+            "env": [
+                "DATABASE_URL",
+                "NEXTAUTH_URL",
+                "NEXTAUTH_SECRET",
+                "GITHUB_ID",
+                "GITHUB_SECRET",
+                "GOOGLE_ID",
+                "GOOGLE_SECRET"
+            ],
             "outputs": [
                 "dist/**",
                 ".next/**",

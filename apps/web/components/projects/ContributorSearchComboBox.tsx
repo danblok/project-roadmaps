@@ -42,7 +42,7 @@ export default function ContributorSearchComboBox({
     if (filter) {
       refetch()
     }
-  }, [filter])
+  }, [filter, refetch])
 
   function handleAdd() {
     if (

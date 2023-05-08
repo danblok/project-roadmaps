@@ -78,7 +78,7 @@ export default function View() {
                             </td>
                           )
                         }
-                        return <td></td>
+                        return <td key={`${status}${year}${month}`}></td>
                       })}
                     </tr>
                   ))}

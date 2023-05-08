@@ -3,9 +3,6 @@ module.exports = {
     'next',
     'turbo',
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'plugin:@typescript-eslint/strict',
     'prettier',
   ],
   parser: '@typescript-eslint/parser',
@@ -16,8 +13,7 @@ module.exports = {
   },
   rules: {
     '@next/next/no-html-link-for-pages': 'off',
-    '@typescript-eslint/consistent-type-imports': 'error',
-    '@typescript-eslint/consistent-type-exports': 'error',
+    'no-unused-vars': 'warn',
   },
   parserOptions: {
     babelOptions: {

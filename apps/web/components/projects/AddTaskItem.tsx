@@ -14,10 +14,9 @@ import { getDateRange } from '@/utils/dates'
 import Loader from '../Loader'
 import Statuses from './Statuses'
 
-type AddTaskItemProps = {}
 type FormData = Pick<Task, 'name' | 'comments'>
 
-export const AddTaskItem = ({}: AddTaskItemProps) => {
+export const AddTaskItem = () => {
   const queryClient = useQueryClient()
   const { project, isProjectLoading } = useProjectContext()
 
