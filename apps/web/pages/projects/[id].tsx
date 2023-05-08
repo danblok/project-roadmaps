@@ -138,6 +138,19 @@ export const getServerSideProps: GetServerSideProps = async ({
     },
   })
 
+  const statuses = await prisma.status.findMany({
+    where: {
+      OR: [
+        {
+          projectId: id,
+        },
+        {
+          projectId: null,
+        },
+      ],
+    },
+  })
+
   if (!project) {
     return {
       notFound: true,
@@ -145,7 +158,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   const queryClient = new QueryClient()
-  queryClient.setQueryData(['project'], project)
+  queryClient.setQueryData(['project'], { ...project, statuses })
 
   return {
     props: {
