@@ -8,8 +8,9 @@ export const getProject = async (
   | (Project & {
       contributors: Account[]
       owner: Account
-      statuses: Status[]
-      tasks: Task[]
+      tasks: (Task & {
+        status: Status
+      })[]
     })
   | null
 > => {
