@@ -1,13 +1,8 @@
 import { createContext, useContext } from 'react'
-import { Account, Project, Status, Task } from 'database'
+import { getProject } from '@/api/project'
 
 type ContextValue = {
-  project: Project & {
-    contributors: Account[]
-    owner: Account
-    statuses: Status[]
-    tasks: Task[]
-  }
+  project: NonNullable<Awaited<ReturnType<typeof getProject>>>
   isProjectLoading: boolean
 }
 
