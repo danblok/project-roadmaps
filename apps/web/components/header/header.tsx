@@ -11,7 +11,7 @@ export default function Header() {
   const loading = status === 'loading'
 
   return (
-    <header className="row-start-1 row-end-2">
+    <header className="row-start-1 row-end-2 z-10">
       <noscript>
         <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
       </noscript>
