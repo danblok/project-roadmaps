@@ -10,6 +10,7 @@ import clsx from 'clsx'
 import { Contributors, Settings, View } from '@/components/projects'
 import { ProjectContext } from '@/components/projects/ProjectContext'
 import { Tasks } from '@/components/projects'
+import { useRouter } from 'next/router'
 
 type ProjectProps = {
   accountId: string
@@ -17,10 +18,32 @@ type ProjectProps = {
 }
 
 export default function ProjectPage({ accountId, id }: ProjectProps) {
-  const { data: project, isLoading: isProjectLoading } = useQuery({
+  const router = useRouter()
+  const {
+    data: project,
+    isLoading: isProjectLoading,
+    isFetched,
+  } = useQuery({
     queryKey: ['project'],
     queryFn: async () => await getProject(id),
   })
+
+  if (isFetched && !project?.id) {
+    return (
+      <div className="h-full text-center flex flex-col items-center justify-center align-middle">
+        <div>
+          <h1 className="next-error-h1 inline-block mx-5 pr-6 text-2xl align-top leading-[49px]">
+            404
+          </h1>
+          <div className="inline-block text-left sm:border-l sm:border-l-gray-500 pl-8">
+            <h2 className="text-sm font-normal leading-[49px]">
+              This page could not be found. Your project may have been deleted.
+            </h2>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   const isSessionUserNotOwner = accountId !== project?.ownerId
 
