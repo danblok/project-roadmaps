@@ -1,17 +1,19 @@
 import { Title } from '../Title'
 import useProjectContext from './ProjectContext'
-import groupTasks, {
+import {
   getUniqueYearAndMonthTaskHeaders,
+  groupTasksByStatus,
 } from '@/utils/groupTasks'
-import { useMemo } from 'react'
+import { Fragment, useMemo } from 'react'
 import clsx from 'clsx'
 
 export default function View() {
   const { project } = useProjectContext()
 
   const headers = getUniqueYearAndMonthTaskHeaders(project.tasks)
+
   const groupedTasks = useMemo(
-    () => Array.from(groupTasks(project.tasks)),
+    () => Array.from(groupTasksByStatus(project.tasks)),
     [project.tasks]
   )
 
@@ -23,64 +25,73 @@ export default function View() {
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
             <div className="overflow-x-auto">
               <table className="min-w-full text-left text-sm font-light">
-                <thead className="border-b font-medium dark:border-neutral-500">
+                <thead>
                   <tr>
-                    <th scope="col" className="px-6 py-4">
+                    <th scope="col" className="px-6 py-4 p-0">
                       Status
                     </th>
                     {headers.map(([year, month]) => (
                       <th
                         key={month + month}
                         scope="col"
-                        className="px-6 py-4 text-center"
+                        className="px-2 py-2 text-center"
                       >
-                        {year}/{month + 1}
+                        {month + 1}/{year}
                       </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {groupedTasks.map(([status, map], i) => (
-                    <tr
-                      key={status}
-                      className={clsx(
-                        'border-b',
-                        groupedTasks.length - 1 !== i &&
-                          ' dark:border-neutral-500'
-                      )}
-                    >
-                      <th className="whitespace-nowrap px-6 py-4 font-medium">
-                        {status}
-                      </th>
-                      {headers.map(([year, month]) => {
-                        // @ts-expect-error
-                        if (map.has(year) && map.get(year).has(month)) {
-                          // @ts-expect-error
-                          const tasks = map.get(year).get(month) ?? []
-                          return (
-                            <td
-                              key={`${status}${year}${month}`}
-                              className="whitespace-nowrap px-6 py-4 font-medium text-white"
-                            >
-                              {tasks.map((task) => (
-                                <div
-                                  key={task.id}
-                                  className="py-2 px-2 bg-cornflower-blue mt-2 rounded-md"
+                  {groupedTasks.map(([status, tasks]) => (
+                    <Fragment key={status}>
+                      <tr className={clsx('border-t dark:border-neutral-500')}>
+                        <th
+                          className="whitespace-nowrap px-6 py-4 font-medium"
+                          rowSpan={tasks.length + 1}
+                        >
+                          {status}
+                        </th>
+                      </tr>
+                      {tasks.map((task) => {
+                        return (
+                          <tr key={task.id}>
+                            {headers.map(([year, month]) => {
+                              const fromDate = new Date(task.from)
+                              const untilDate = new Date(task.until)
+
+                              const monthsDiff =
+                                untilDate.getMonth() -
+                                fromDate.getMonth() +
+                                (untilDate.getFullYear() -
+                                  fromDate.getFullYear()) *
+                                  12 +
+                                1
+
+                              return year === fromDate.getFullYear() &&
+                                month === fromDate.getMonth() ? (
+                                <td
+                                  key={`${year}${month}${task.id}`}
+                                  colSpan={monthsDiff}
+                                  className="whitespace-nowrap p-1 font-medium text-white"
                                 >
-                                  <p>
-                                    <span className="text-bittersweet font-bold bg-white rounded-md py-0.5 px-1 mr-2">
-                                      {new Date(task.until).getDate()}th
-                                    </span>
-                                    {task.name}
-                                  </p>
-                                </div>
-                              ))}
-                            </td>
-                          )
-                        }
-                        return <td key={`${status}${year}${month}`}></td>
+                                  <div className="p-2 py-3 bg-cornflower-blue rounded-md">
+                                    <p>
+                                      <span className="text-bittersweet font-bold bg-white rounded-md py-1 px-2 mr-2">
+                                        {fromDate.getDate()}th-
+                                        {untilDate.getDate()}th
+                                      </span>
+                                      {task.name}
+                                    </p>
+                                  </div>
+                                </td>
+                              ) : (
+                                <td key={`${year}${month}${task.id}`}></td>
+                              )
+                            })}
+                          </tr>
+                        )
                       })}
-                    </tr>
+                    </Fragment>
                   ))}
                 </tbody>
               </table>
