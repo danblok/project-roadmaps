@@ -8,7 +8,7 @@ const SignIn = ({ loading }: { loading: boolean }) => {
         href={`/api/auth/signin`}
         className={clsx(
           'py-2 bg-blue-400 rounded-xl border-2 border-blue-400',
-          'px-6 text-md text-white font-bold tracking-wider',
+          'px-3 sm:px-6 text-md text-white font-bold tracking-wider',
           'hover:bg-white hover:text-blue-400',
           loading && 'opacity-0'
         )}
