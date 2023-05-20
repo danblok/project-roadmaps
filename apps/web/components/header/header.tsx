@@ -5,6 +5,7 @@ import SignIn from './SignIn'
 import Nav from './nav'
 import Image from 'next/image'
 import logo from '../../public/logo.png'
+import Link from 'next/link'
 
 export default function Header() {
   const { data: session, status } = useSession()
@@ -16,10 +17,12 @@ export default function Header() {
         <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
       </noscript>
       <div className="flex justify-between items-center">
-        <Image src={logo} alt="Logo" className="p-3 sm:ml-10" />
+        <Link href="/">
+          <Image src={logo} alt="Logo" className="p-2 sm:ml-10" />
+        </Link>
         <div
           className={
-            'p-6 pl-0 sm:p-8 flex justify-around sm:justify-end items-center'
+            'p-2 pl-0 sm:p-8 flex justify-around sm:justify-end items-center'
           }
         >
           <Nav />
