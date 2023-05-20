@@ -58,3 +58,19 @@ export function getUniqueYearAndMonthTaskHeaders(
 
   return headers
 }
+
+export function groupTasksByStatus(tasks: (Task & { status: Status })[]) {
+  const groupedTasks = new Map<string, (Task & { status: Status })[]>()
+  for (const task of tasks) {
+    const status = task.status.name
+
+    if (groupedTasks.has(status)) {
+      // @ts-expect-error
+      groupedTasks.get(status).push(task)
+    } else {
+      groupedTasks.set(status, [task])
+    }
+  }
+
+  return groupedTasks
+}
