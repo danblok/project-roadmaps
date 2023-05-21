@@ -11,6 +11,7 @@ import { Contributors, Settings, View } from '@/components/projects'
 import { ProjectContext } from '@/components/projects/ProjectContext'
 import { Tasks } from '@/components/projects'
 import { useRouter } from 'next/router'
+import { Title } from '@/components/Title'
 
 type ProjectProps = {
   accountId: string
@@ -52,6 +53,9 @@ export default function ProjectPage({ accountId, id }: ProjectProps) {
       <Head>
         <title>{project?.name}</title>
       </Head>
+      <h2 className="text-6xl text-center text-light-red pb-10">
+        {project?.name}
+      </h2>
       <Tab.Group>
         <Tab.List className="flex flex-col sm:flex-row sm:flex-wrap md:flex-nowrap rounded-xl bg-white p-1 mx-4">
           <Tab
