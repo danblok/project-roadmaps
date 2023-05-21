@@ -14,7 +14,12 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Oxygen&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" href="/logo.png" type="image/x-icon" sizes="any" />
+        <link
+          rel="icon"
+          href="/sigma-logo.svg"
+          type="image/x-icon"
+          sizes="any"
+        />
       </Head>
       <body>
         <Main />

@@ -4,7 +4,7 @@ import Profile from './Profile'
 import SignIn from './SignIn'
 import Nav from './nav'
 import Image from 'next/image'
-import logo from '../../public/logo.png'
+import sigmaLogo from '../../public/sigma-logo.svg'
 import Link from 'next/link'
 
 export default function Header() {
@@ -18,7 +18,7 @@ export default function Header() {
       </noscript>
       <div className="flex justify-between items-center">
         <Link href="/">
-          <Image src={logo} alt="Logo" className="p-2 sm:ml-10" />
+          <Image src={sigmaLogo} alt="logo" className="p-2 sm:ml-5 md:ml-10" />
         </Link>
         <div
           className={
