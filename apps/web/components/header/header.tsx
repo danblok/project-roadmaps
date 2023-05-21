@@ -22,7 +22,7 @@ export default function Header() {
         </Link>
         <div
           className={
-            'p-2 pl-0 sm:p-8 flex justify-around sm:justify-end items-center'
+            'p-6 pl-0 sm:p-8 flex justify-around sm:justify-end items-center'
           }
         >
           <Nav />
