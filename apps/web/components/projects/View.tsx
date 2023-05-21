@@ -1,28 +1,20 @@
 import { Title } from '../Title'
 import useProjectContext from './ProjectContext'
-import {
-  getUniqueYearAndMonthTaskHeaders,
-  groupTasksByStatus,
-} from '@/utils/groupTasks'
-import { Fragment, useMemo } from 'react'
+import { getHeaders, groupTasksByStatus } from '@/utils/groupTasks'
+import { Fragment } from 'react'
 import clsx from 'clsx'
 
 export default function View() {
   const { project } = useProjectContext()
-
-  const headers = getUniqueYearAndMonthTaskHeaders(project.tasks)
-
-  const groupedTasks = useMemo(
-    () => Array.from(groupTasksByStatus(project.tasks)),
-    [project.tasks]
-  )
+  const headers = getHeaders(project.tasks)
+  const groupedTasks = Array.from(groupTasksByStatus(project.tasks))
 
   return (
     <div>
       <Title title="Roadmap view" />
       <div className="mx-auto flex flex-col overflow-x-auto max-w-xs sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-full">
         <div className="sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+          <div className="inline-block min-w-full sm:px-6 lg:px-8">
             <div className="overflow-x-auto">
               <table className="min-w-full text-left text-sm font-light">
                 <thead>
@@ -34,7 +26,7 @@ export default function View() {
                       <th
                         key={`${year}${month}`}
                         scope="col"
-                        className="px-2 py-2 text-center"
+                        className="px-2 py-2 text-center border-x"
                       >
                         {month + 1}/{year}
                       </th>

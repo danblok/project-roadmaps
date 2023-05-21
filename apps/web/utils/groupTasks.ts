@@ -41,13 +41,13 @@ export default function groupTasks(tasks: (Task & { status: Status })[]) {
   return groupedTasks
 }
 
-export function getUniqueYearAndMonthTaskHeaders(
+export function getHeaders(
   tasks: (Task & { status: Status })[]
-) {
+): [number, number][] {
   let headers: [number, number][] = new Array()
 
   for (const task of tasks) {
-    const date = new Date(task.until)
+    const date = new Date(task.from)
     const year = date.getFullYear()
     const month = date.getMonth()
 
