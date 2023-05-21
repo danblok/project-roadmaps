@@ -84,7 +84,8 @@ export default function ProjectPage({ accountId, id }: ProjectProps) {
                 'basis-1/2 rounded-lg py-2.5 text-lg font-bold leading-6 text-cornflower-blue transition-colors',
                 selected
                   ? 'bg-cornflower-blue shadow text-white'
-                  : 'text-cornflower-blue hover:bg-cornflower-blue/[0.2] hover:text-cornflower-blue'
+                  : 'text-cornflower-blue hover:bg-cornflower-blue/[0.2] hover:text-cornflower-blue',
+                isSessionUserNotOwner && 'opacity-50 cursor-not-allowed'
               )
             }
             disabled={isSessionUserNotOwner}
@@ -97,7 +98,8 @@ export default function ProjectPage({ accountId, id }: ProjectProps) {
                 'basis-1/2 rounded-lg py-2.5 text-lg font-bold leading-6 text-cornflower-blue transition-colors',
                 selected
                   ? 'bg-cornflower-blue shadow text-white'
-                  : 'text-cornflower-blue hover:bg-cornflower-blue/[0.2] hover:text-cornflower-blue'
+                  : 'text-cornflower-blue hover:bg-cornflower-blue/[0.2] hover:text-cornflower-blue',
+                isSessionUserNotOwner && 'opacity-50 cursor-not-allowed'
               )
             }
             disabled={isSessionUserNotOwner}
