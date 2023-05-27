@@ -9,7 +9,7 @@ export default function Tasks() {
   const [editableId, setEditableId] = useState('')
 
   return (
-    <div>
+    <div className="relative">
       <Title title="Tasks" />
       <div className="flex flex-col p-4 gap-4">
         <h3 className="text-xl font-bold text-cornflower-blue self-center lg:self-start">
