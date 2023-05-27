@@ -22,7 +22,7 @@ export default function CreateStatusDialog({
 }: CreateStatusDialogProps) {
   const queryClient = useQueryClient()
   const {
-    project: { id: projectId },
+    project: { id: projectId, statuses },
   } = useProjectContext()
 
   const mutation = useMutation({
@@ -34,25 +34,27 @@ export default function CreateStatusDialog({
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     reset,
   } = useForm<FormData>()
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    await mutation.mutateAsync(
-      {
-        ...data,
-      },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: ['project'],
-          })
+    if (!statuses.find((s) => s.name === data.name)) {
+      await mutation.mutateAsync(
+        {
+          ...data,
         },
-      }
-    )
-    setIsOpen(false)
-    reset()
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: ['project'],
+            })
+          },
+        }
+      )
+      setIsOpen(false)
+      reset()
+    }
   }
 
   return (
@@ -72,7 +74,6 @@ export default function CreateStatusDialog({
           Fill the name field to create a new status
         </p>
       </div>
-
       <form
         className="flex flex-col gap-4"
         onSubmit={async (e) => {
@@ -89,6 +90,9 @@ export default function CreateStatusDialog({
                   value: 20,
                   message: 'Max length is 20',
                 },
+                validate: (value) =>
+                  value !== statuses.find((s) => value === s.name)?.name ||
+                  'The status with such a name already exists',
                 value: '',
               })}
               type="text"
@@ -103,7 +107,10 @@ export default function CreateStatusDialog({
             />
           </label>
         </ErrorFieldMessageWrapper>
-        <ActionButton type="submit" isActionLoading={mutation.isLoading}>
+        <ActionButton
+          type="submit"
+          isActionLoading={isValid && mutation.isLoading}
+        >
           Create
         </ActionButton>
       </form>
