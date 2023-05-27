@@ -1,4 +1,8 @@
-import { deleteProfile, getProfile, updateProfile } from '@/api-handlers/api/profile'
+import {
+  deleteProfile,
+  getProfile,
+  updateProfile,
+} from '@/api-handlers/api/profile'
 import { UpdateAccountInput } from '@/api-handlers/api/types'
 import ActionButton from '@/components/ActionButton'
 import ErrorFieldMessageWrapper from '@/components/ErrorFieldWrapper'
@@ -336,7 +340,6 @@ function DeleteDialog({
             <input
               {...register('email', {
                 required: 'Email is required',
-
                 validate: (value) => value === email || 'Match with your email',
                 value: '',
               })}

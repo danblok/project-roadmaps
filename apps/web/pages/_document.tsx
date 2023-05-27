@@ -20,6 +20,10 @@ export default function Document() {
           type="image/x-icon"
           sizes="any"
         />
+        <meta
+          name="description"
+          content="Project Roadmaps is a project management tool that allows you to manage your projects and tasks in a simple and intuitive way"
+        />
       </Head>
       <body>
         <Main />
