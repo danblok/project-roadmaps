@@ -33,8 +33,8 @@ export function ProjectItem({ project }: PropsWithoutRef<ProjectItemProps>) {
         <p className="mt-1 text-gray-900">
           Last update:{' '}
           <span className="text-bittersweet">
-            {new Date().getDate() - new Date(project.updatedAt).getDate()} days
-            ago
+            {-(new Date().getDate() - new Date(project.updatedAt).getDate())}{' '}
+            days ago
           </span>
         </p>
       </div>
