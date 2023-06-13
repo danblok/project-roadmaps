@@ -41,18 +41,24 @@ export default function groupTasks(tasks: (Task & { status: Status })[]) {
   return groupedTasks
 }
 
-export function getHeaders(tasks: (Task & { status: Status })[]): [number, number][] {
+export function getHeaders(
+  tasks: (Task & { status: Status })[]
+): [number, number][] {
   let headers: [number, number][] = new Array()
   for (const task of tasks) {
     const fromDate = new Date(task.from)
     const untilDate = new Date(task.until)
     if (
-      !headers.find((h) => h[0] === fromDate.getFullYear() && h[1] === fromDate.getMonth())
+      !headers.find(
+        (h) => h[0] === fromDate.getFullYear() && h[1] === fromDate.getMonth()
+      )
     ) {
       headers.push([fromDate.getFullYear(), fromDate.getMonth()])
     }
     if (
-      !headers.find((h) => h[0] === untilDate.getFullYear() && h[1] === untilDate.getMonth())
+      !headers.find(
+        (h) => h[0] === untilDate.getFullYear() && h[1] === untilDate.getMonth()
+      )
     ) {
       headers.push([untilDate.getFullYear(), untilDate.getMonth()])
     }

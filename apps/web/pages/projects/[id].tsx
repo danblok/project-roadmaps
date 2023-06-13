@@ -10,7 +10,6 @@ import clsx from 'clsx'
 import { Contributors, Settings, View } from '@/components/projects'
 import { ProjectContext } from '@/components/projects/ProjectContext'
 import { Tasks } from '@/components/projects'
-import { useRouter } from 'next/router'
 
 type ProjectProps = {
   accountId: string
@@ -18,7 +17,6 @@ type ProjectProps = {
 }
 
 export default function ProjectPage({ accountId, id }: ProjectProps) {
-  const router = useRouter()
   const {
     data: project,
     isLoading: isProjectLoading,
@@ -28,7 +26,14 @@ export default function ProjectPage({ accountId, id }: ProjectProps) {
     queryFn: async () => await getProject(id),
   })
 
-  if (isFetched && !project?.id) {
+  if (
+    isFetched && // the project has been fetched
+    (!project?.id || // the project hasn't been found
+      (!project?.contributors.find(
+        (contributor) => contributor.id === accountId
+      ) && // the user is not a contributor
+        project?.ownerId !== accountId)) // the user is not the owner
+  ) {
     return (
       <div className="h-full text-center flex flex-col items-center justify-center align-middle">
         <div>

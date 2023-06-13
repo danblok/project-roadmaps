@@ -24,7 +24,7 @@ export default function View() {
                     </th>
                     {headers.map(([year, month]) => (
                       <th
-                        key={`${year}${month}`}
+                        key={`headers${year}${month}`}
                         scope="col"
                         className="px-2 py-2 text-center border-x"
                       >
