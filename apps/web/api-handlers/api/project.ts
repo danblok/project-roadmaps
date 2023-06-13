@@ -6,13 +6,13 @@ export const getProject = async (
   id?: string
 ): Promise<
   | (Project & {
-    contributors: Account[]
-    owner: Account
-    statuses: Status[]
-    tasks: (Task & {
-      status: Status
-    })[]
-  })
+      contributors: Account[]
+      owner: Account
+      statuses: Status[]
+      tasks: (Task & {
+        status: Status
+      })[]
+    })
   | null
 > => {
   return axios.get(`/api/project/${id}`).then(({ data: { data } }) => data)

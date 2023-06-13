@@ -2,6 +2,7 @@ import { Project, Account } from 'database'
 import { trimText } from '@/utils/text-transform'
 import Link from 'next/link'
 import { memo, PropsWithoutRef } from 'react'
+import { getDiffInDays } from '@/utils/dates'
 
 type ProjectItemProps = {
   project: Project & {
@@ -31,10 +32,9 @@ export function ProjectItem({ project }: PropsWithoutRef<ProjectItemProps>) {
           </span>
         </p>
         <p className="mt-1 text-gray-900">
-          Last update:{' '}
+          Created:{' '}
           <span className="text-bittersweet">
-            {-(new Date().getDate() - new Date(project.updatedAt).getDate())}{' '}
-            days ago
+            {getDiffInDays(new Date(project.createdAt), new Date())} days ago
           </span>
         </p>
       </div>
